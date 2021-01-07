@@ -1,0 +1,14 @@
+{
+  "cases_endpt" : "https://api.gdc.cancer.gov/cases",
+  "primary_site" : ["breast"],
+  "tumor_stages" :{
+    "stage_1" : ["Stage I", "Stage IA", "Stage IB"],
+    "stage_2" : ["Stage II", "Stage IIA", "Stage IIB"],
+    "stage_3" : ["Stage III", "Stage IIIA", "Stage IIIB", "Stage IIIC"],
+    "stage_4" : ["Stage IV"]
+  },
+  "format": "JSON",
+  "size": "75",
+  "data_endpt" : "https://api.gdc.cancer.gov/data/",
+  "dir" : "E:/Przyrod-master/0_master_thesis/data/files"
+}
