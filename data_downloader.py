@@ -1,23 +1,12 @@
 import requests
-import json
 import gzip
-import os
+from common import *
 
 
 class GDCDownloader(object):
     def __init__(self, config):
 
         self.__config = config
-
-    def seve_b_file(self, file_name, content):
-        print("saving file ...")
-        file = open(file_name, 'wb')
-        file.write(content)
-        file.close()
-
-    def check_dir_exsits(self, dir):
-        if not os.path.exists(dir):
-            os.makedirs(dir)
 
     def download_file(self, file_id, stage):
         try:
@@ -29,9 +18,9 @@ class GDCDownloader(object):
             unzipped_file = gzip.decompress(response.content)
 
             file_dir = self.__config["dir"] + "/" + stage + "/"
-            self.check_dir_exsits(file_dir)
+            check_dir_exsits(file_dir)
 
-            self.seve_b_file(file_dir + file_id + ".tsv", unzipped_file)
+            seve_b_file(file_dir + file_id + ".tsv", unzipped_file)
 
             print("File has been downloaded successfully")
         except Exception as err:

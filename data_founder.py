@@ -1,10 +1,10 @@
 import requests
-import json
 from data_downloader import GDCDownloader
 from data_formatter import DataFormatter
 from datetime import datetime
 import time
-import os
+
+from common import *
 
 
 class GDCServer(object):
@@ -37,7 +37,7 @@ class GDCServer(object):
         # from a dictionary to JSON-formatted string
         parameters = {
             "filters": json.dumps(filters),
-            "expand": ["files"],
+            "expand": self.__config["expand"],
             "format": self.__config["format"],
             "size": self.__config["size"]
         }
@@ -45,7 +45,10 @@ class GDCServer(object):
         return parameters
 
     # getting information with expanded diagnoses of one case
-    def get_case_diagnoses(self, case_id):
+    def get_case_by_id(self, case_id, expand=None):
+        if expand is None:
+            expand = "diagnoses"
+
         filters = {"op": "and",
                    "content": [{"op": "in",
                                 "content":
@@ -56,39 +59,38 @@ class GDCServer(object):
                    }
         parameters = {
             "filters": json.dumps(filters),
-            "expand": ["diagnoses"],
+            "expand": [expand],
             "format": self.__config["format"]
         }
         case_diagnose = requests.get(self.__config["cases_endpt"], params=parameters)
         return case_diagnose.json()
 
+    def get_case_multiple_expands(self, params):
+        expand_list = params["expand"]
+        params["expand"] = expand_list[0]
+        data = requests.get(self.__config["cases_endpt"], params=params).json()
+
+        for expand in expand_list[1:]:
+            for case_number in range(len(data["data"]["hits"])):
+                diagnose = self.get_case_by_id(data["data"]["hits"][case_number]["case_id"], expand)
+                data["data"]["hits"][case_number][expand] = diagnose["data"]["hits"][0][expand]
+
+        return data
+
     # getting specific cases information with files information and adding diagnoses for it
     def get_case_information(self, tumor_stage):
         try:
-            data = requests.get(self.__config["cases_endpt"], params=self.create_params(tumor_stage)).json()
+            params = self.create_params(tumor_stage)
 
-            for case_number in range(len(data["data"]["hits"])):
-                diagnose = self.get_case_diagnoses(data["data"]["hits"][case_number]["case_id"])
-                data["data"]["hits"][case_number]["diagnoses"] = diagnose["data"]["hits"][0]["diagnoses"]
-
-            print("Information was found successfully!")
-            print("Data infomration:  {}".format(data["data"]["pagination"]))
+            if len(params["expand"]) > 1:
+                data = self.get_case_multiple_expands(params)
+            else:
+                data = requests.get(self.__config["cases_endpt"], params=params).json()
 
             return data
 
         except Exception as err:
             print("Error occurred while getting cases information: {}".format(err))
-
-    def check_dir_exsits(self, dir):
-        if not os.path.exists(dir):
-            os.makedirs(dir)
-
-    def save_file(self, data, path_name):
-        print("Saving file: {}".format(path_name))
-        file_object = open(path_name, "w+")
-        file_object.write(data)
-        file_object.close()
-        print("File was saved successfully")
 
     def save_case_info(self, data, file_name):
         try:
@@ -96,12 +98,12 @@ class GDCServer(object):
             file_time = datetime.now().strftime("_%Y_%m_%d")
             directory = self.__config["dir"] + "/info/"
 
-            self.check_dir_exsits(directory)
+            check_dir_exsits(directory)
 
             file_dir_name = directory + "_information_" + file_name + file_time + ".json"
 
-            self.save_file(data_json, file_dir_name)
-
+            save_file(data_json, file_dir_name)
+            print("Data has been found successfully")
         except Exception as err:
             print("Error occurred while saving file: {}".format(err))
 
@@ -120,12 +122,13 @@ class GDCServer(object):
             print("Searching files of {} in https://api.gdc.cancer.gov ...".format(stage))
             data = self.get_case_information(self.__config["tumor_stages"][stage])
 
-            self.file_formatter = DataFormatter(self.__config)
-            data = self.file_formatter.choose_fpkm_data(data)
+            file_formatter = DataFormatter(self.__config)
+            data = file_formatter.choose_fpkm_data(data)
 
             self.save_case_info(data, stage)
             self.files_downloader(data, stage)
             # print(json.dumps(data, indent=4, sort_keys=True))
+
         end = time.time()
         print("time spent: {}".format(str(end - start)))
 

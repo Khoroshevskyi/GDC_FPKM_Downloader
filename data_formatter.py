@@ -1,4 +1,4 @@
-import json
+from common import *
 
 
 class DataFormatter(object):
@@ -32,11 +32,6 @@ class DataFormatter(object):
         print("Data has been corrected successfully!")
         return self.data_new
 
-    def open_file(self, file_path):
-        with open(file_path) as json_file:
-            data = json.load(json_file)
-        return data
-
 
 def main():
     """Main Function"""
@@ -44,7 +39,7 @@ def main():
     formtatter = DataFormatter(config)
     print('Enter path to the json file:')
     file_path = input()
-    data = formtatter.open_file(file_path)
+    data = open_json_file(file_path=file_path)
     formtatter.choose_fpkm_data(data)
 
 
