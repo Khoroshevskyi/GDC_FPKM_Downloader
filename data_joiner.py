@@ -36,8 +36,8 @@ class Joiner(object):
                 else:
                     new_df = self.open_fpkm_file(main_dir, this_stage, file_name)
                     df_merge = pd.merge(df_merge, new_df, on='gen')
-                    break
-        df_merge = df_merge.ndim
+
+        df_merge = df_merge.T
 
         df_merge.to_csv(output_file, sep='\t')
 
