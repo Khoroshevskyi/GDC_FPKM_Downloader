@@ -1,39 +1,55 @@
 import requests
 import gzip
+import argparse
 from common import *
 
 
 class GDCDownloader(object):
-    def __init__(self, config):
-
+    def __init__(self, config=None):
+        if config is None:
+            config = json.load(open("config.json"))
         self.__config = config
 
-    def download_file(self, file_id, stage):
+    def download_file(self, file_id, end_dir=None):
+
+        if end_dir is None:
+            end_dir = self.__config["dir"]
+
         try:
             print("Downloading file: {}  ...".format(file_id))
 
-            data_endpt = self.__config["data_endpt"] + file_id
+            data_endpt = "https://api.gdc.cancer.gov/data/{}".format(file_id)
             response = requests.get(data_endpt)
 
             unzipped_file = gzip.decompress(response.content)
+            check_dir_exsits(end_dir)
 
-            file_dir = self.__config["dir"] + "/" + stage + "/"
-            check_dir_exsits(file_dir)
+            seve_b_file(end_dir + "/" + file_id + ".tsv", unzipped_file)
 
-            seve_b_file(file_dir + file_id + ".tsv", unzipped_file)
-
-            print("File has been downloaded successfully")
+            print("File has been downloaded successfully\n")
         except Exception as err:
             print("Error occurred while downloading and saving file: {} ".format(err))
 
 
+def get_arg():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("-f", "--file", type=str, required=True,
+                      help="Id of the file that has to be downloaded")
+
+    parser.add_argument("-d", "--dir", type=str, default=os.getcwd(),
+                      help="The directory, in which file has to be saved")
+
+    options = parser.parse_args()
+    return options
+
+
 def main():
     """Main Function"""
+    options = get_arg()
     config = json.load(open("config.json"))
     gdc_downloader = GDCDownloader(config)
-    print('Enter file id:')
-    file_id = input()
-    gdc_downloader.download_file(file_id=file_id)
+    gdc_downloader.download_file(file_id=vars(options)['file'], end_dir=vars(options)['dir'])
 
 
 if __name__ == '__main__':

@@ -14,7 +14,7 @@ def open_json_file(file_path):
 
 
 def seve_b_file(file_name, content):
-    print("saving file ...")
+    print("Saving file ...")
     file = open(file_name, 'wb')
     file.write(content)
     file.close()

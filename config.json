@@ -10,6 +10,6 @@
   },
     "expand": ["diagnoses","files"],
     "format": "JSON",
-    "size": "1",
+    "size": "25",
     "dir" : "E:/Przyrod-master/0_master_thesis/data/files"
 }

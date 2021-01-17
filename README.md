@@ -28,15 +28,33 @@ python data_founder.py
 
 ## 2. data_formatter.py
 
-**Example**:
+Script to format data that is found in data_founder.py
+
+**Example:**
 ```
-python data_formatter.py
+python data_formatter.py -f dir/file
 ```
 
 ## 3. data_downloader.py
 
-**Example**:
+Script to download data by specifying id.
+File id is required. Path to save file is optional.
+
+**Example:**
+
+``` 
+python data_downloader.py -f 20ae8645-332b-4aa8-a840-2ee2e6e69012 -d directory/of/the/file
+```
+
+## 4. data_joiner.py
+Script to merge in appropriate way all files that were saved by data_founder.
+<br />
+All the script need is
+- Main folder with files
+- name of the output file
+
+**Example:**
 
 ```
-python data_downloader.py
+python data_joiner.py -f F:/directory/with/files -o
 ```

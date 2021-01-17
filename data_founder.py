@@ -1,7 +1,7 @@
 import requests
 from data_downloader import GDCDownloader
 from data_formatter import DataFormatter
-from datetime import datetime
+import datetime
 import time
 
 from common import *
@@ -95,7 +95,7 @@ class GDCServer(object):
     def save_case_info(self, data, file_name):
         try:
             data_json = json.dumps(data, indent=4)
-            file_time = datetime.now().strftime("_%Y_%m_%d")
+            file_time = datetime.datetime.now().strftime("_%Y_%m_%d")
             directory = self.__config["dir"] + "/info/"
 
             check_dir_exsits(directory)
@@ -103,7 +103,7 @@ class GDCServer(object):
             file_dir_name = directory + "_information_" + file_name + file_time + ".json"
 
             save_file(data_json, file_dir_name)
-            print("Data has been found successfully")
+            print("Data has been found successfully\n")
         except Exception as err:
             print("Error occurred while saving file: {}".format(err))
 
@@ -112,13 +112,15 @@ class GDCServer(object):
         nb_file = 0
         for case in data["hits"]:
             nb_file += 1
-            self.file_downloader.download_file(case["fpkm_files"][0]["file_id"], stage)
-            print("File:: {} out of {} have been downloaded".format(nb_file, len_all))
+            directory = self.__config["dir"] + "/" + stage
+            self.file_downloader.download_file(case["fpkm_files"][0]["file_id"], directory)
+
+            print("Files: {} out of {} have been downloaded".format(nb_file, len_all))
 
     def get(self):
         start = time.time()
         for stage in self.__config["tumor_stages"]:
-            print("##################")
+            print("\n #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# ")
             print("Searching files of {} in https://api.gdc.cancer.gov ...".format(stage))
             data = self.get_case_information(self.__config["tumor_stages"][stage])
 
@@ -129,8 +131,10 @@ class GDCServer(object):
             self.files_downloader(data, stage)
             # print(json.dumps(data, indent=4, sort_keys=True))
 
-        end = time.time()
-        print("time spent: {}".format(str(end - start)))
+        end = time.time() - start
+        m, s = divmod(end, 60)
+        print("All files are downloaded! :)")
+        print("Time spent: {} min {} sec.".format(int(m), s))
 
 
 def main():

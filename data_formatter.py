@@ -1,5 +1,5 @@
 from common import *
-
+import argparse
 
 class DataFormatter(object):
     def __init__(self, config):
@@ -37,9 +37,14 @@ def main():
     """Main Function"""
     config = json.load(open("config.json"))
     formtatter = DataFormatter(config)
-    print('Enter path to the json file:')
-    file_path = input()
-    data = open_json_file(file_path=file_path)
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-f", "--file", type=str, required=True,
+                        help="Id of the file that has to be formatted")
+    options = parser.parse_args()
+
+    file = open_json_file(file_path=vars(options)['file'])
+    data = open_json_file(file)
     formtatter.choose_fpkm_data(data)
 
 
