@@ -1,6 +1,7 @@
 import requests
 from data_downloader import GDCDownloader
 from data_formatter import DataFormatter
+from data_joiner import Joiner
 import datetime
 import time
 
@@ -116,9 +117,11 @@ class GDCServer(object):
             self.file_downloader.download_file(case["fpkm_files"][0]["file_id"], directory)
 
             print("Files: {} out of {} have been downloaded".format(nb_file, len_all))
+        print("All files are downloaded! :)")
 
     def get(self):
         start = time.time()
+        print("script started")
         for stage in self.__config["tumor_stages"]:
             print("\n #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-# ")
             print("Searching files of {} in https://api.gdc.cancer.gov ...".format(stage))
@@ -131,9 +134,19 @@ class GDCServer(object):
             self.files_downloader(data, stage)
             # print(json.dumps(data, indent=4, sort_keys=True))
 
+            if self.__config["join_files"] == "True":
+                try:
+                    print("File joiner started")
+                    joiner = Joiner()
+                    joiner.join_fpkm_files(self.__config["dir"],
+                                           self.__config["dir"]+"/last_file.csv")
+                    print("Files have been joined successfully")
+
+                except Exception as err:
+                    print("Error occurred while joining files: {}".format(err))
+
         end = time.time() - start
         m, s = divmod(end, 60)
-        print("All files are downloaded! :)")
         print("Time spent: {} min {} sec.".format(int(m), s))
 
 

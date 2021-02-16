@@ -21,6 +21,9 @@ eg. ["diagnoses","files"]
 - "size" - how many cases has to be found.
 - "dir" - directory, in which files have to be saved.
 
+data_founder is a main engine for finding, downloading and joining data of gene expression of tumor cells. 
+(In the future executing of all scripts has to be transferred to separate script)
+
 **Example**:
 ```
 python data_founder.py
