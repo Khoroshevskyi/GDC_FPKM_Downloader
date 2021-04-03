@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import requests
 import gzip
 import argparse
@@ -24,7 +26,7 @@ class GDCDownloader(object):
             unzipped_file = gzip.decompress(response.content)
             check_dir_exsits(end_dir)
 
-            seve_b_file(end_dir + "/" + file_id + ".tsv", unzipped_file)
+            save_b_file(end_dir + "/" + file_id + ".tsv", unzipped_file)
 
             print("File has been downloaded successfully\n")
         except Exception as err:

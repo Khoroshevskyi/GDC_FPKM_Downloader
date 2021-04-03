@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import requests
 from data_downloader import GDCDownloader
 from data_formatter import DataFormatter
@@ -13,6 +15,7 @@ class GDCServer(object):
 
         self.__config = config
         self.file_downloader = GDCDownloader(self.__config)
+
 
     def create_params(self, tumor_stage):
 
@@ -108,6 +111,7 @@ class GDCServer(object):
         except Exception as err:
             print("Error occurred while saving file: {}".format(err))
 
+    # downloading files
     def files_downloader(self, data, stage):
         len_all = len(data["hits"])
         nb_file = 0
@@ -119,6 +123,7 @@ class GDCServer(object):
             print("Files: {} out of {} have been downloaded".format(nb_file, len_all))
         print("All files are downloaded! :)")
 
+    # main method of the class, using config file to get all necessary information
     def get(self):
         start = time.time()
         print("script started")
@@ -134,16 +139,15 @@ class GDCServer(object):
             self.files_downloader(data, stage)
             # print(json.dumps(data, indent=4, sort_keys=True))
 
-            if self.__config["join_files"] == "True":
-                try:
-                    print("File joiner started")
-                    joiner = Joiner()
-                    joiner.join_fpkm_files(self.__config["dir"],
-                                           self.__config["dir"]+"/last_file.csv")
-                    print("Files have been joined successfully")
+        if self.__config["join_files"] == "True":
+            try:
+                print("File joiner started")
+                joiner = Joiner()
+                joiner.join_fpkm_files(self.__config["dir"], self.__config["dir"] + "/last_file.csv")
+                print("Files have been joined successfully")
 
-                except Exception as err:
-                    print("Error occurred while joining files: {}".format(err))
+            except Exception as err:
+                print("Error occurred while joining files: {}".format(err))
 
         end = time.time() - start
         m, s = divmod(end, 60)

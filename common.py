@@ -1,6 +1,11 @@
+# -*- coding: utf-8 -*-
+
 import os
 import json
 
+'''
+Script contains functions that are used in few scrips
+'''
 
 def check_dir_exsits(dir):
     if not os.path.exists(dir):
@@ -13,7 +18,7 @@ def open_json_file(file_path):
     return data
 
 
-def seve_b_file(file_name, content):
+def save_b_file(file_name, content):
     print("Saving file ...")
     file = open(file_name, 'wb')
     file.write(content)
