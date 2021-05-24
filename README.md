@@ -1,13 +1,20 @@
 # GDC data processing scripts
-Below you can find information about all scripts used for data finding, formatting and downloading from NHI GDC
+This is a repository of scripts to automatic download adn join FPKM files from GDC portal.
 
-All information about data and API can be found in the link below:<br />
+All information about data and API that have been used in scripts can be found in the link below:<br />
 https://gdc.cancer.gov/
-
-Each of them has different purpose but configuration of all of them can be found in one common config file [config.json](config.json) 
 
 All scripts were developed for python3.x for Windows users (for other platforms is not verified)
 
+## GUI (starting program)
+Graphical user interface has been created to facilitate user of downloading and joining files. <br />
+To start the program:
+- Execute [FPKM_download_gui.py](FPKM_download_gui.py)
+- Fill in all necessary fields
+- trigger star button
+
+---
+### In addition, there is possibility to run all the scrips manually:
 
 ## 1. [data_founder.py](data_founder.py)
 Script to find data on the gdc.cancer.gov platform.<br />
@@ -21,6 +28,7 @@ e.g. ["diagnoses","files"]
 - "size" - how many cases has to be found.
 - "dir" - directory, where files have to be saved.
 - "join_files" - "True" if you want to join files
+- "join_method" - "merge" and "append" methods are available
 
 data_founder is a main engine for finding, downloading and joining data of gene expression of tumor cells. 
 (In the future executing of all scripts has to be transferred to separate script)

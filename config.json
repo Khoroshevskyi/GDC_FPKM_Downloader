@@ -1,16 +1,1 @@
-{
-    "cases_endpt" : "https://api.gdc.cancer.gov/cases",
-    "data_endpt" : "https://api.gdc.cancer.gov/data/",
-    "primary_site" : ["breast"],
-    "tumor_stages" :{
-        "stage_1" : ["Stage I", "Stage IA", "Stage IB"],
-        "stage_2" : ["Stage II", "Stage IIA", "Stage IIB"],
-        "stage_3" : ["Stage III", "Stage IIIA", "Stage IIIB", "Stage IIIC"],
-        "stage_4" : ["Stage IV"]
-  },
-    "expand": ["diagnoses","files"],
-    "format": "JSON",
-    "size": "5",
-    "dir" : "E:/Przyrod-master/0_master_thesis/data/files/1",
-    "join_files": "True"
-}
+{"cases_endpt": "https://api.gdc.cancer.gov/cases", "data_endpt": "https://api.gdc.cancer.gov/data/", "primary_site": "breast", "expand": ["diagnoses", "files"], "format": "JSON", "size": "5", "dir": "E:/Przyrod-master/0_master_thesis/data/files/2test", "tumor_stages": {"stage_1": ["Stage I", "Stage IA", "Stage IB"], "stage_4": ["Stage IV"]}, "join_files": "True", "join_method": "merge"}

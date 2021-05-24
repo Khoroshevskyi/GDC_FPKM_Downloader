@@ -143,7 +143,12 @@ class GDCServer(object):
             try:
                 print("File joiner started")
                 joiner = Joiner()
-                joiner.join_fpkm_files(self.__config["dir"], self.__config["dir"] + "/last_file.csv")
+                if self.__config["join_method"] == "append": 
+                    joiner.join_fpkm_files_append(self.__config["dir"], self.__config["dir"] + "/last_file.csv")
+                    print("append method")
+                else:
+                    joiner.join_fpkm_files(self.__config["dir"], self.__config["dir"] + "/last_file.csv")
+                    print("merge method")
                 print("Files have been joined successfully")
 
             except Exception as err:
