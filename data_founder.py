@@ -27,7 +27,7 @@ class GDCServer(object):
 
         stage_value = {"op": "in",
                        "content":
-                           {"field": "cases.diagnoses.tumor_stage",
+                           {"field": "cases.diagnoses.ajcc_pathologic_stage",
                             "value": tumor_stage}
                        }
 
