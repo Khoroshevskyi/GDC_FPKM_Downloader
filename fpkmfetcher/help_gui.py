@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from utils import open_file
+from fpkmfetcher.utils import open_file
 
 
 class Ui_MainWindow(object):
@@ -36,13 +36,13 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         self.MainWindow.setStatusBar(self.statusbar)
 
-        self.retranslateUi(self.MainWindow)
+        self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self.MainWindow)
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
         self.MainWindow.setWindowTitle(_translate("MainWindow", "HELP"))
-        self.textEdit.setHtml(_translate("MainWindow", open_file("./src/help.html")))
+        self.textEdit.setHtml(_translate("MainWindow", open_file("fpkmfetcher/src/help.html")))
 """
 if __name__ == "__main__":
     import sys

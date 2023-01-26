@@ -2,7 +2,8 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import json
-import data_founder
+from fpkmfetcher.data_founder import GDCServer
+import fpkmfetcher.help_gui as Help
 import os
 
 
@@ -259,13 +260,12 @@ class UiMainWindow:
         self.run_data_founder()
 
     def run_data_founder(self):
-        gdc_server = data_founder.GDCServer(self.data_config)
+        gdc_server = GDCServer(self.data_config)
         gdc_server.get()
 
     def show_help(self):
         print("hello")
         try:
-            import help_gui as Help
             help_window = QtWidgets.QMainWindow()
             self.help_s = Help.Ui_MainWindow()
             self.help_s.setupUi(help_window)
@@ -274,7 +274,7 @@ class UiMainWindow:
             print(err)
 
 
-if __name__ == "__main__":
+def main():
     import sys
 
     app = QtWidgets.QApplication(sys.argv)

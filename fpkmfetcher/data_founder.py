@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import requests
-from data_downloader import GDCDownloader
-from data_formatter import DataFormatter
-from data_joiner import Joiner
+from fpkmfetcher.data_downloader import GDCDownloader
+from fpkmfetcher.data_formatter import DataFormatter
+from fpkmfetcher.data_joiner import Joiner
 import datetime
 import time
 
-from utils import *
+from fpkmfetcher.utils import *
 
 
 class GDCServer(object):

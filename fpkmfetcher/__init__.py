@@ -1,18 +1,11 @@
 """ Package-level data """
-from fpkmfetcher.fpkmfetcher import *
 
-import logmuse
-
-logmuse.init_logger("geofetch")
-""" Package-level data """
 from fpkmfetcher.fpkmfetcher import *
-from ._version import __version__
 
 import logmuse
 import coloredlogs
 
-
-_LOGGER = logmuse.init_logger("pepdbagent")
+_LOGGER = logmuse.init_logger("fpkmfetcher")
 coloredlogs.install(
     logger=_LOGGER,
     datefmt="%H:%M:%S",

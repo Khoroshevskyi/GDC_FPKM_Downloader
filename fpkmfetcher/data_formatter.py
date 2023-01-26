@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from utils import *
+from fpkmfetcher.utils import *
 import argparse
 
 

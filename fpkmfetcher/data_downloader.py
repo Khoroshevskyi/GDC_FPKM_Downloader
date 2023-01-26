@@ -3,7 +3,7 @@
 import requests
 import gzip
 import argparse
-from utils import *
+from fpkmfetcher.utils import *
 
 
 class GDCDownloader(object):
