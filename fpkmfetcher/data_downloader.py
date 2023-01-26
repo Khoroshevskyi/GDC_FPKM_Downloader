@@ -3,7 +3,7 @@
 import requests
 import gzip
 import argparse
-from common import *
+from utils import *
 
 
 class GDCDownloader(object):

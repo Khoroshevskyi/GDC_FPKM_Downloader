@@ -1,5 +1,5 @@
-# GDC data processing scripts
-This is a repository of scripts to automatic download adn join FPKM files from GDC portal.
+# GDC FPKM data downloading and integrating scripts
+fpkmfetcher is a program for automatic downloading and combining FPKM files from GDC portal.
 
 All information about data and API that have been used in scripts can be found in the link below:<br />
 https://gdc.cancer.gov/
@@ -9,16 +9,16 @@ All scripts were developed for python3.x for Windows users (for other platforms 
 ## GUI (starting program)
 Graphical user interface has been created to facilitate user of downloading and joining files. <br />
 To start the program:
-- Execute [FPKM_download_gui.py](FPKM_download_gui.py)
+- Execute [FPKM_download_gui.py](fpkmfetcher/FPKM_download_gui.py)
 - Fill in all necessary fields
 - trigger star button
 
 ---
 ### In addition, there is possibility to run all the scrips manually:
 
-## 1. [data_founder.py](data_founder.py)
+## 1. [data_founder.py](fpkmfetcher/data_founder.py)
 Script to find data on the gdc.cancer.gov platform.<br />
-Script completely uses [config.json](config.json) to find necessary information. You have to specify:
+Script completely uses [config.json](fpkmfetcher/config.json) to find necessary information. You have to specify:
 - "primary_site" - "type of tumor" that you want to find (multiple choose is not supported) 
   e.g. ["breast"]
 - "tumor_stages" - tumor stages that you want to find
@@ -38,7 +38,7 @@ data_founder is a main engine for finding, downloading and joining data of gene 
 python data_founder.py
 ```
 
-## 2. [data_formatter.py](data_formatter.py)
+## 2. [data_formatter.py](fpkmfetcher/data_formatter.py)
 
 Script to format data that is found in data_founder.py
 
@@ -47,7 +47,7 @@ Script to format data that is found in data_founder.py
 python data_formatter.py -f dir/file
 ```
 
-## 3. [data_downloader.py](data_downloader.py)
+## 3. [data_downloader.py](fpkmfetcher/data_downloader.py)
 
 Script to download data by specifying id.
 File id is required. Path to save file is optional.
@@ -58,7 +58,7 @@ File id is required. Path to save file is optional.
 python data_downloader.py -f 20ae8645-332b-4aa8-a840-2ee2e6e69012 -d directory/of/the/file
 ```
 
-## 4. [data_joiner.py](data_joiner.py)
+## 4. [data_joiner.py](fpkmfetcher/data_joiner.py)
 Script to merge in appropriate way all files that were saved by data_founder.
 <br />
 #### Required arguments:

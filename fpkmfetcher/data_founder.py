@@ -7,7 +7,7 @@ from data_joiner import Joiner
 import datetime
 import time
 
-from common import *
+from utils import *
 
 
 class GDCServer(object):

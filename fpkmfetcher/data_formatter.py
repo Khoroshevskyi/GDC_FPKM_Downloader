@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from common import *
+from utils import *
 import argparse
+
 
 class DataFormatter(object):
     def __init__(self, config):

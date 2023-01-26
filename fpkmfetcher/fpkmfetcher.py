@@ -3,13 +3,14 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import json
 import data_founder
+import os
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(475, 379)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+class UiMainWindow:
+    def __init__(self, main_window):
+        main_window.setObjectName("MainWindow")
+        main_window.resize(475, 379)
+        self.centralwidget = QtWidgets.QWidget(main_window)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName("gridLayout")
@@ -164,24 +165,24 @@ class Ui_MainWindow(object):
 
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_2)
         self.gridLayout.addWidget(self.scrollArea, 0, 0, 1, 1)
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        main_window.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(main_window)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 475, 21))
         self.menubar.setObjectName("menubar")
         self.menuHelp = QtWidgets.QMenu(self.menubar)
         self.menuHelp.setObjectName("menuHelp")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        main_window.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(main_window)
         self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
-        self.actionHelp = QtWidgets.QAction(MainWindow)
+        main_window.setStatusBar(self.statusbar)
+        self.actionHelp = QtWidgets.QAction(main_window)
         self.actionHelp.setObjectName("actionHelp")
         self.actionHelp.triggered.connect(self.show_help)
         self.menuHelp.addAction(self.actionHelp)
         self.menubar.addAction(self.menuHelp.menuAction())
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi(main_window)
+        QtCore.QMetaObject.connectSlotsByName(main_window)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -196,7 +197,7 @@ class Ui_MainWindow(object):
         self.checkBox_stage2.setText(_translate("MainWindow", "Stage 2"))
         self.checkBox_stage4.setText(_translate("MainWindow", "Stage 4"))
         self.label_dir.setText(_translate("MainWindow", "Directory to save files"))
-        self.lineEdit_directory.setText(_translate("MainWindow", "E:/Przyrod-master/0_master_thesis/data/files/1"))
+        self.lineEdit_directory.setText(_translate("MainWindow", os.path.expanduser('~')))
         self.checkBox_join_files.setText(_translate("MainWindow", "Join files"))
         self.pushButton_download.setText(_translate("MainWindow", "Start downloading"))
         self.pushButton_setDir.setText(_translate("MainWindow", "Choose directory"))
@@ -239,7 +240,7 @@ class Ui_MainWindow(object):
             data["tumor_stages"]["stage_3"] = ["Stage III", "Stage IIIA", "Stage IIIB", "Stage IIIC"]
         if self.stage4:
             data["tumor_stages"]["stage_4"] = ["Stage IV"]
-            
+
         if self.join_files:
             data["join_files"] = "True"
         else:
@@ -250,36 +251,35 @@ class Ui_MainWindow(object):
         else:
             data["join_method"] = "append"
 
-
         self.data_config = data
-        
+
         with open('config.json', 'w+') as json_file:
-               json.dump(data, json_file)
-        
+            json.dump(data, json_file)
+
         self.run_data_founder()
-       
+
     def run_data_founder(self):
         gdc_server = data_founder.GDCServer(self.data_config)
         gdc_server.get()
-        
+
     def show_help(self):
         print("hello")
         try:
             import help_gui as Help
-            HelpWindow = QtWidgets.QMainWindow()
+            help_window = QtWidgets.QMainWindow()
             self.help_s = Help.Ui_MainWindow()
-            self.help_s.setupUi(HelpWindow)
-            HelpWindow.show()
+            self.help_s.setupUi(help_window)
+            help_window.show()
         except Exception as err:
             print(err)
 
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     app.setStyle("Fusion")
     MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
+    ui = UiMainWindow(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())

@@ -31,3 +31,9 @@ def save_file(data, path_name):
     file_object.write(data)
     file_object.close()
     print("File was saved successfully")
+
+
+def open_file(file_path: str) -> str:
+    with open(file_path, 'r') as file:
+        data = file.read()
+    return data
