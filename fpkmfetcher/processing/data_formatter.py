@@ -27,7 +27,8 @@ class DataFormatter(object):
             self.add_case_to_dataset(case)
             is_empty = True
             for file in case["files"]:
-                if file["file_name"][-11:].lower() == "fpkm.txt.gz" and file["acl"] == ["open"]:
+                ending = "rna_seq.augmented_star_gene_counts.tsv"
+                if file["file_name"][-len(ending):].lower() == ending and file["access"] == "open":
                     is_empty = False
                     self.data_new["hits"][-1]["fpkm_files"].append(file)
             if is_empty:

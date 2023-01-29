@@ -1,1 +1,0 @@
-{"cases_endpt": "https://api.gdc.cancer.gov/cases", "data_endpt": "https://api.gdc.cancer.gov/data/", "primary_site": "lung", "expand": ["diagnoses", "files"], "format": "JSON", "size": "15", "dir": "", "tumor_stages": {"stage_4": ["Stage IV"]}, "join_files": "True", "join_method": "merge"}

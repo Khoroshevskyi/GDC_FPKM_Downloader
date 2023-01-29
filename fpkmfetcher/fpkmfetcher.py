@@ -2,7 +2,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import json
-from fpkmfetcher.data_founder import GDCServer
+from fpkmfetcher.processing.data_founder import GDCServer
 import fpkmfetcher.help_gui as Help
 import os
 
@@ -254,7 +254,7 @@ class UiMainWindow:
 
         self.data_config = data
 
-        with open('config.json', 'w+') as json_file:
+        with open('./config.json', 'w+') as json_file:
             json.dump(data, json_file)
 
         self.run_data_founder()

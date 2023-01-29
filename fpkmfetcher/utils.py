@@ -2,10 +2,13 @@
 
 import os
 import json
+import logging
 
 '''
 Script contains functions that are used in few scrips
 '''
+
+_LOGGER = logging.getLogger("fpkmfetcher")
 
 def check_dir_exsits(dir):
     if not os.path.exists(dir):
@@ -19,18 +22,17 @@ def open_json_file(file_path):
 
 
 def save_b_file(file_name, content):
-    print("Saving file ...")
-    file = open(file_name, 'wb')
-    file.write(content)
-    file.close()
+    _LOGGER.info("Saving file ...")
+    with open(file_name, 'wb') as file:
+        file.write(content)
 
 
 def save_file(data, path_name):
-    print("Saving file: {}".format(path_name))
+    _LOGGER.info("Saving file: {}".format(path_name))
     file_object = open(path_name, "w+")
     file_object.write(data)
     file_object.close()
-    print("File was saved successfully")
+    _LOGGER.info("File was saved successfully")
 
 
 def open_file(file_path: str) -> str:

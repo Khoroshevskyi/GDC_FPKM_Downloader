@@ -5,10 +5,7 @@ import os
 import argparse
 import time
 
-TUMOR_STAGE = {"I": "stage_1",
-               "II": "stage_2",
-               "III": "stage_3",
-               "VI": "stage_4"}
+from fpkmfetcher.const import TUMOR_STAGE
 
 
 class Joiner(object):
@@ -20,11 +17,15 @@ class Joiner(object):
     def open_fpkm_file(case_id, tumor_stage, file_path):
 
         '''pd.read_csv(nrows=1000, delimiter='\\t')'''
-        file_content = pd.read_csv(file_path, header=None, delimiter='\t', names=["gene", case_id])
+        # file_content = pd.read_csv(file_path, header=None, delimiter='\t', names=["gene", case_id])
+        file_content_all = pd.read_csv(file_path, header=1, delimiter='\t')
+        file_content = file_content_all[['gene_id', 'fpkm_unstranded']]
+
+        ggfg = len(file_content.index)
         file_content.loc[len(file_content.index)] = ["tumor_stage", tumor_stage]
 
-        file_content = file_content.set_index('gene')
-        file_content = file_content.sort_values('gene')
+        file_content = file_content.set_index('gene_id')
+        file_content = file_content.sort_values('gene_id')
 
         return file_content
 
@@ -65,7 +66,7 @@ class Joiner(object):
                     first_file = False
                 else:
                     new_df = self.open_fpkm_file(file_name, this_stage, file_path)
-                    df_merge = pd.merge(df_merge, new_df, on='gene')
+                    df_merge = pd.merge(df_merge, new_df, on='gene_id')
 
         df_merge = df_merge.T
         df_merge.to_csv(output_file, sep='\t')

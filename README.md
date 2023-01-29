@@ -16,9 +16,9 @@ To start the program:
 ---
 ### In addition, there is possibility to run all the scrips manually:
 
-## 1. [data_founder.py](fpkmfetcher/data_founder.py)
+## 1. [data_founder.py](fpkmfetcher/processing/data_founder.py)
 Script to find data on the gdc.cancer.gov platform.<br />
-Script completely uses [config.json](fpkmfetcher/config.json) to find necessary information. You have to specify:
+Script completely uses [config.json](fpkmfetcher/processing/config.json) to find necessary information. You have to specify:
 - "primary_site" - "type of tumor" that you want to find (multiple choose is not supported) 
   e.g. ["breast"]
 - "tumor_stages" - tumor stages that you want to find
@@ -38,7 +38,7 @@ data_founder is a main engine for finding, downloading and joining data of gene 
 python data_founder.py
 ```
 
-## 2. [data_formatter.py](fpkmfetcher/data_formatter.py)
+## 2. [data_formatter.py](fpkmfetcher/processing/data_formatter.py)
 
 Script to format data that is found in data_founder.py
 
@@ -47,7 +47,7 @@ Script to format data that is found in data_founder.py
 python data_formatter.py -f dir/file
 ```
 
-## 3. [data_downloader.py](fpkmfetcher/data_downloader.py)
+## 3. [data_downloader.py](fpkmfetcher/processing/data_downloader.py)
 
 Script to download data by specifying id.
 File id is required. Path to save file is optional.
@@ -58,7 +58,7 @@ File id is required. Path to save file is optional.
 python data_downloader.py -f 20ae8645-332b-4aa8-a840-2ee2e6e69012 -d directory/of/the/file
 ```
 
-## 4. [data_joiner.py](fpkmfetcher/data_joiner.py)
+## 4. [data_joiner.py](fpkmfetcher/processing/data_joiner.py)
 Script to merge in appropriate way all files that were saved by data_founder.
 <br />
 #### Required arguments:

@@ -20,13 +20,12 @@ class GDCDownloader(object):
         try:
             print("Downloading file: {}  ...".format(file_id))
 
-            data_endpt = "https://api.gdc.cancer.gov/data/{}".format(file_id)
+            data_endpt = f"https://api.gdc.cancer.gov/data/{file_id}"
             response = requests.get(data_endpt)
 
-            unzipped_file = gzip.decompress(response.content)
+            binary_content = response.content
             check_dir_exsits(end_dir)
-
-            save_b_file(end_dir + "/" + file_id + ".tsv", unzipped_file)
+            save_b_file(end_dir + "/" + file_id + ".tsv", binary_content)
 
             print("File has been downloaded successfully\n")
         except Exception as err:
