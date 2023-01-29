@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import requests
-import gzip
 import argparse
 from fpkmfetcher.utils import *
 
@@ -24,7 +23,7 @@ class GDCDownloader(object):
             response = requests.get(data_endpt)
 
             binary_content = response.content
-            check_dir_exsits(end_dir)
+            check_dir_exists(end_dir)
             save_b_file(end_dir + "/" + file_id + ".tsv", binary_content)
 
             print("File has been downloaded successfully\n")
@@ -35,11 +34,21 @@ class GDCDownloader(object):
 def get_arg():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("-f", "--file", type=str, required=True,
-                      help="Id of the file that has to be downloaded")
+    parser.add_argument(
+        "-f",
+        "--file",
+        type=str,
+        required=True,
+        help="Id of the file that has to be downloaded",
+    )
 
-    parser.add_argument("-d", "--dir", type=str, default=os.getcwd(),
-                      help="The directory, in which file has to be saved")
+    parser.add_argument(
+        "-d",
+        "--dir",
+        type=str,
+        default=os.getcwd(),
+        help="The directory, in which file has to be saved",
+    )
 
     options = parser.parse_args()
     return options
@@ -50,8 +59,10 @@ def main():
     options = get_arg()
     config = json.load(open("config.json"))
     gdc_downloader = GDCDownloader(config)
-    gdc_downloader.download_file(file_id=vars(options)['file'], end_dir=vars(options)['dir'])
+    gdc_downloader.download_file(
+        file_id=vars(options)["file"], end_dir=vars(options)["dir"]
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

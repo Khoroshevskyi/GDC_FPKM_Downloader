@@ -39,7 +39,7 @@ setup(
     name=PACKAGE,
     packages=[PACKAGE],
     version=version,
-    description="Downloads FPKM data and metadata from Genomic Data Commons Data Portal.",
+    description="Program for downloading FPKM data and metadata from Genomic Data Commons Data Portal.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     classifiers=[
@@ -53,7 +53,7 @@ setup(
     keywords="project, bioinformatics, sequencing, ngs, workflow, GUI",
     url="https://github.com/Khoroshevskyi/{}/".format(PACKAGE),
     author="Oleksandr Khoroshevskyi",
-    license="",
+    license="BSD2",
     entry_points={
         "console_scripts": [
             "fpkmfetcher = fpkmfetcher:main",

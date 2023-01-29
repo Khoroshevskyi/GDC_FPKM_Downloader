@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 from fpkmfetcher.utils import open_file
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+class HelpWindow:
+    def __init__(self, MainWindow):
         self.MainWindow = MainWindow
         self.MainWindow.setObjectName("MainWindow")
         self.MainWindow.resize(563, 438)
@@ -42,7 +42,11 @@ class Ui_MainWindow(object):
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
         self.MainWindow.setWindowTitle(_translate("MainWindow", "HELP"))
-        self.textEdit.setHtml(_translate("MainWindow", open_file("fpkmfetcher/src/help.html")))
+        self.textEdit.setHtml(
+            _translate("MainWindow", open_file("fpkmfetcher/src/help.html"))
+        )
+
+
 """
 if __name__ == "__main__":
     import sys

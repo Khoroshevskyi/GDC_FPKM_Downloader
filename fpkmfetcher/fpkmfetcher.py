@@ -3,7 +3,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import json
 from fpkmfetcher.processing.data_founder import GDCServer
-import fpkmfetcher.help_gui as Help
+from fpkmfetcher.help_gui import HelpWindow
+import sys
 import os
 
 
@@ -36,7 +37,9 @@ class UiMainWindow:
         self.label_header.setFont(font)
         self.label_header.setAlignment(QtCore.Qt.AlignCenter)
         self.label_header.setObjectName("label_header")
-        self.formLayout.setWidget(0, QtWidgets.QFormLayout.SpanningRole, self.label_header)
+        self.formLayout.setWidget(
+            0, QtWidgets.QFormLayout.SpanningRole, self.label_header
+        )
 
         # label cancer type
         self.label = QtWidgets.QLabel(self.scrollAreaWidgetContents_2)
@@ -49,8 +52,10 @@ class UiMainWindow:
         # combo Box to check cancer type
         self.comboBox_cancer_type = QtWidgets.QComboBox(self.scrollAreaWidgetContents_2)
         self.comboBox_cancer_type.setObjectName("comboBox_cancer_type")
-        self.comboBox_cancer_type.addItems(['breast', 'lung'])
-        self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.comboBox_cancer_type)
+        self.comboBox_cancer_type.addItems(["breast", "lung"])
+        self.formLayout.setWidget(
+            1, QtWidgets.QFormLayout.FieldRole, self.comboBox_cancer_type
+        )
 
         # label namber of files
         self.label_nuber_files = QtWidgets.QLabel(self.scrollAreaWidgetContents_2)
@@ -58,7 +63,9 @@ class UiMainWindow:
         font.setPointSize(10)
         self.label_nuber_files.setFont(font)
         self.label_nuber_files.setObjectName("label_nuber_files")
-        self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_nuber_files)
+        self.formLayout.setWidget(
+            2, QtWidgets.QFormLayout.LabelRole, self.label_nuber_files
+        )
 
         # edit number of files to download
         self.lineEdit_number = QtWidgets.QLineEdit(self.scrollAreaWidgetContents_2)
@@ -68,7 +75,9 @@ class UiMainWindow:
         self.lineEdit_number.setInputMethodHints(QtCore.Qt.ImhDigitsOnly)
         self.lineEdit_number.setAlignment(QtCore.Qt.AlignCenter)
         self.lineEdit_number.setObjectName("lineEdit_number")
-        self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.lineEdit_number)
+        self.formLayout.setWidget(
+            2, QtWidgets.QFormLayout.FieldRole, self.lineEdit_number
+        )
 
         # label for choose stages of tumor
         self.label_stages = QtWidgets.QLabel(self.scrollAreaWidgetContents_2)
@@ -77,7 +86,9 @@ class UiMainWindow:
         self.label_stages.setFont(font)
         self.label_stages.setAlignment(QtCore.Qt.AlignCenter)
         self.label_stages.setObjectName("label_stages")
-        self.formLayout.setWidget(3, QtWidgets.QFormLayout.SpanningRole, self.label_stages)
+        self.formLayout.setWidget(
+            3, QtWidgets.QFormLayout.SpanningRole, self.label_stages
+        )
 
         # check box for stage1
         self.checkBox_stage1 = QtWidgets.QCheckBox(self.scrollAreaWidgetContents_2)
@@ -85,25 +96,33 @@ class UiMainWindow:
         self.checkBox_stage1.setAutoFillBackground(False)
         self.checkBox_stage1.setChecked(True)
         self.checkBox_stage1.setObjectName("checkBox_stage1")
-        self.formLayout.setWidget(4, QtWidgets.QFormLayout.LabelRole, self.checkBox_stage1)
+        self.formLayout.setWidget(
+            4, QtWidgets.QFormLayout.LabelRole, self.checkBox_stage1
+        )
 
         # check box for stage3
         self.checkBox_stage3 = QtWidgets.QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox_stage3.setChecked(True)
         self.checkBox_stage3.setObjectName("checkBox_stage3")
-        self.formLayout.setWidget(4, QtWidgets.QFormLayout.FieldRole, self.checkBox_stage3)
+        self.formLayout.setWidget(
+            4, QtWidgets.QFormLayout.FieldRole, self.checkBox_stage3
+        )
 
         # check box for stage2
         self.checkBox_stage2 = QtWidgets.QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox_stage2.setChecked(True)
         self.checkBox_stage2.setObjectName("checkBox_stage2")
-        self.formLayout.setWidget(5, QtWidgets.QFormLayout.LabelRole, self.checkBox_stage2)
+        self.formLayout.setWidget(
+            5, QtWidgets.QFormLayout.LabelRole, self.checkBox_stage2
+        )
 
         # check box for stage4
         self.checkBox_stage4 = QtWidgets.QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox_stage4.setChecked(True)
         self.checkBox_stage4.setObjectName("checkBox_stage4")
-        self.formLayout.setWidget(5, QtWidgets.QFormLayout.FieldRole, self.checkBox_stage4)
+        self.formLayout.setWidget(
+            5, QtWidgets.QFormLayout.FieldRole, self.checkBox_stage4
+        )
 
         # just line
         self.line = QtWidgets.QFrame(self.scrollAreaWidgetContents_2)
@@ -128,13 +147,17 @@ class UiMainWindow:
         # type directory
         self.lineEdit_directory = QtWidgets.QLineEdit(self.scrollAreaWidgetContents_2)
         self.lineEdit_directory.setObjectName("lineEdit_directory")
-        self.formLayout.setWidget(7, QtWidgets.QFormLayout.FieldRole, self.lineEdit_directory)
+        self.formLayout.setWidget(
+            7, QtWidgets.QFormLayout.FieldRole, self.lineEdit_directory
+        )
 
         # choose directory
         self.pushButton_setDir = QtWidgets.QPushButton(self.scrollAreaWidgetContents_2)
         self.pushButton_setDir.setObjectName("pushButton_setDir")
         self.pushButton_setDir.clicked.connect(self.set_dir)
-        self.formLayout.setWidget(8, QtWidgets.QFormLayout.FieldRole, self.pushButton_setDir)
+        self.formLayout.setWidget(
+            8, QtWidgets.QFormLayout.FieldRole, self.pushButton_setDir
+        )
 
         # checkbox if joining files
         self.checkBox_join_files = QtWidgets.QCheckBox(self.scrollAreaWidgetContents_2)
@@ -145,13 +168,17 @@ class UiMainWindow:
         self.checkBox_join_files.setAutoFillBackground(False)
         self.checkBox_join_files.setChecked(True)
         self.checkBox_join_files.setObjectName("checkBox_join_files")
-        self.formLayout.setWidget(9, QtWidgets.QFormLayout.LabelRole, self.checkBox_join_files)
+        self.formLayout.setWidget(
+            9, QtWidgets.QFormLayout.LabelRole, self.checkBox_join_files
+        )
 
         # joining file approach
         self.comboBox_join = QtWidgets.QComboBox(self.scrollAreaWidgetContents_2)
         self.comboBox_join.setObjectName("comboBox_join")
         self.comboBox_join.addItems(["Merge", "Append"])
-        self.formLayout.setWidget(9, QtWidgets.QFormLayout.FieldRole, self.comboBox_join)
+        self.formLayout.setWidget(
+            9, QtWidgets.QFormLayout.FieldRole, self.comboBox_join
+        )
 
         self.justlabel = QtWidgets.QLabel(self.scrollAreaWidgetContents_2)
         self.justlabel.setText("")
@@ -159,10 +186,14 @@ class UiMainWindow:
         self.formLayout.setWidget(10, QtWidgets.QFormLayout.LabelRole, self.justlabel)
 
         # Execution button:
-        self.pushButton_download = QtWidgets.QPushButton(self.scrollAreaWidgetContents_2)
+        self.pushButton_download = QtWidgets.QPushButton(
+            self.scrollAreaWidgetContents_2
+        )
         self.pushButton_download.setObjectName("pushButton_download")
         self.pushButton_download.clicked.connect(self.download_data)
-        self.formLayout.setWidget(10, QtWidgets.QFormLayout.FieldRole, self.pushButton_download)
+        self.formLayout.setWidget(
+            10, QtWidgets.QFormLayout.FieldRole, self.pushButton_download
+        )
 
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_2)
         self.gridLayout.addWidget(self.scrollArea, 0, 0, 1, 1)
@@ -190,7 +221,9 @@ class UiMainWindow:
         MainWindow.setWindowTitle(_translate("MainWindow", "FPKM file downloader"))
         self.label_header.setText(_translate("MainWindow", "FPKM file downloader"))
         self.label.setText(_translate("MainWindow", "Cancer type:"))
-        self.label_nuber_files.setText(_translate("MainWindow", "Number of files to download:"))
+        self.label_nuber_files.setText(
+            _translate("MainWindow", "Number of files to download:")
+        )
         self.lineEdit_number.setText(_translate("MainWindow", "15"))
         self.label_stages.setText(_translate("MainWindow", "Sages to download"))
         self.checkBox_stage1.setText(_translate("MainWindow", "Stage 1"))
@@ -198,7 +231,9 @@ class UiMainWindow:
         self.checkBox_stage2.setText(_translate("MainWindow", "Stage 2"))
         self.checkBox_stage4.setText(_translate("MainWindow", "Stage 4"))
         self.label_dir.setText(_translate("MainWindow", "Directory to save files"))
-        self.lineEdit_directory.setText(_translate("MainWindow", os.path.expanduser('~')))
+        self.lineEdit_directory.setText(
+            _translate("MainWindow", os.path.expanduser("~"))
+        )
         self.checkBox_join_files.setText(_translate("MainWindow", "Join files"))
         self.pushButton_download.setText(_translate("MainWindow", "Start downloading"))
         self.pushButton_setDir.setText(_translate("MainWindow", "Choose directory"))
@@ -238,7 +273,12 @@ class UiMainWindow:
         if self.stage2:
             data["tumor_stages"]["stage_2"] = ["Stage II", "Stage IIA", "Stage IIB"]
         if self.stage3:
-            data["tumor_stages"]["stage_3"] = ["Stage III", "Stage IIIA", "Stage IIIB", "Stage IIIC"]
+            data["tumor_stages"]["stage_3"] = [
+                "Stage III",
+                "Stage IIIA",
+                "Stage IIIB",
+                "Stage IIIC",
+            ]
         if self.stage4:
             data["tumor_stages"]["stage_4"] = ["Stage IV"]
 
@@ -254,7 +294,7 @@ class UiMainWindow:
 
         self.data_config = data
 
-        with open('./config.json', 'w+') as json_file:
+        with open("./config.json", "w+") as json_file:
             json.dump(data, json_file)
 
         self.run_data_founder()
@@ -264,19 +304,15 @@ class UiMainWindow:
         gdc_server.get()
 
     def show_help(self):
-        print("hello")
         try:
             help_window = QtWidgets.QMainWindow()
-            self.help_s = Help.Ui_MainWindow()
-            self.help_s.setupUi(help_window)
+            self.help_s = HelpWindow(help_window)
             help_window.show()
         except Exception as err:
             print(err)
 
 
 def main():
-    import sys
-
     app = QtWidgets.QApplication(sys.argv)
     app.setStyle("Fusion")
     MainWindow = QtWidgets.QMainWindow()

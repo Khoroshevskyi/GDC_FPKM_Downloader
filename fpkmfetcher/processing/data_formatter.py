@@ -11,13 +11,15 @@ class DataFormatter(object):
         self.data_new = {"hits": []}
 
     def add_case_to_dataset(self, case):
-        case_data = {"case_id": case["case_id"],
-                     "primary_site": case["primary_site"],
-                     "created_datetime": case["created_datetime"],
-                     "diagnoses": case["diagnoses"],
-                     "diagnosis_ids": case["diagnosis_ids"],
-                     "disease_type": case["disease_type"],
-                     "fpkm_files": []}
+        case_data = {
+            "case_id": case["case_id"],
+            "primary_site": case["primary_site"],
+            "created_datetime": case["created_datetime"],
+            "diagnoses": case["diagnoses"],
+            "diagnosis_ids": case["diagnosis_ids"],
+            "disease_type": case["disease_type"],
+            "fpkm_files": [],
+        }
 
         self.data_new["hits"].append(case_data)
 
@@ -28,7 +30,10 @@ class DataFormatter(object):
             is_empty = True
             for file in case["files"]:
                 ending = "rna_seq.augmented_star_gene_counts.tsv"
-                if file["file_name"][-len(ending):].lower() == ending and file["access"] == "open":
+                if (
+                    file["file_name"][-len(ending) :].lower() == ending
+                    and file["access"] == "open"
+                ):
                     is_empty = False
                     self.data_new["hits"][-1]["fpkm_files"].append(file)
             if is_empty:
@@ -43,14 +48,19 @@ def main():
     formtatter = DataFormatter(config)
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-f", "--file", type=str, required=True,
-                        help="Id of the file that has to be formatted")
+    parser.add_argument(
+        "-f",
+        "--file",
+        type=str,
+        required=True,
+        help="Id of the file that has to be formatted",
+    )
     options = parser.parse_args()
 
-    file = open_json_file(file_path=vars(options)['file'])
+    file = open_json_file(file_path=vars(options)["file"])
     data = open_json_file(file)
     formtatter.choose_fpkm_data(data)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
