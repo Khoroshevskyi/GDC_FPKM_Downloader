@@ -2,6 +2,7 @@ import pandas as pd
 import os
 import argparse
 import time
+import logging
 
 from fpkmfetcher.const import TUMOR_STAGE
 
@@ -17,7 +18,7 @@ class Joiner(object):
         file_content_all = pd.read_csv(file_path, header=1, delimiter="\t")
         file_content = file_content_all[["gene_id", "fpkm_unstranded"]]
 
-        d2 = {'gene_id': 'stage', 'fpkm_unstranded': tumor_stage}
+        d2 = {"gene_id": "stage", "fpkm_unstranded": tumor_stage}
         file_content = file_content.append(d2, ignore_index=True)
 
         file_content = file_content.rename(columns={"fpkm_unstranded": file_name})

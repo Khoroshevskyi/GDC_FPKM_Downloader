@@ -2,7 +2,7 @@ import os
 import json
 import logging
 import requests
-from fpkmfetcher.const import GDC_API_DATA_STR
+from fpkmfetcher.const import GDC_API_DATA_ENDPOINT
 
 """
 Script contains functions that are used in few scrips
@@ -48,7 +48,7 @@ def download_file_from_gdc(file_id, end_dir=None):
         if not os.path.isfile(file_path):
             print(f"Downloading file: {file_id}  ...")
 
-            data_endpoint = f"{GDC_API_DATA_STR}{file_id}"
+            data_endpoint = f"{GDC_API_DATA_ENDPOINT}{file_id}"
             response = requests.get(data_endpoint)
 
             binary_content = response.content

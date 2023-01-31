@@ -52,7 +52,12 @@ class UiMainWindow:
         # combo Box to check cancer type
         self.comboBox_cancer_type = QtWidgets.QComboBox(self.scrollAreaWidgetContents_2)
         self.comboBox_cancer_type.setObjectName("comboBox_cancer_type")
-        self.comboBox_cancer_type.addItems(["breast", "lung"])
+        self.comboBox_cancer_type.addItems(["breast",
+                                            "lung",
+                                            # "brain",
+                                            # "lymph nodes",
+                                            # "Bone Marrow",
+                                            ])
         self.formLayout.setWidget(
             1, QtWidgets.QFormLayout.FieldRole, self.comboBox_cancer_type
         )
@@ -225,7 +230,7 @@ class UiMainWindow:
             _translate("MainWindow", "Number of files to download:")
         )
         self.lineEdit_number.setText(_translate("MainWindow", "15"))
-        self.label_stages.setText(_translate("MainWindow", "Sages to download"))
+        self.label_stages.setText(_translate("MainWindow", "Stages to download"))
         self.checkBox_stage1.setText(_translate("MainWindow", "Stage 1"))
         self.checkBox_stage3.setText(_translate("MainWindow", "Stage 3"))
         self.checkBox_stage2.setText(_translate("MainWindow", "Stage 2"))
@@ -247,7 +252,14 @@ class UiMainWindow:
 
     def download_data(self):
         self.number_to_download = self.lineEdit_number.text()
-        self.cancer_type = self.comboBox_cancer_type.currentText()
+        cancer_type = self.comboBox_cancer_type.currentText()
+        if cancer_type == "lung":
+            self.cancer_type = "bronchus and lung"
+        elif cancer_type == "Bone Marrow":
+            self.cancer_type = "hematopoietic and reticuloendothelial systems"
+
+        else:
+            self.cancer_type = cancer_type
         self.directory_to_save_files = self.lineEdit_directory.text()
         self.join_files = self.checkBox_join_files.isChecked()
         self.stage1 = self.checkBox_stage1.isChecked()
@@ -260,8 +272,6 @@ class UiMainWindow:
 
     def create_and_save_configurations(self):
         data = {}
-        data["cases_endpt"] = "https://api.gdc.cancer.gov/cases"
-        data["data_endpt"] = "https://api.gdc.cancer.gov/data/"
         data["primary_site"] = self.cancer_type
         data["expand"] = ["diagnoses", "files"]
         data["format"] = "JSON"
