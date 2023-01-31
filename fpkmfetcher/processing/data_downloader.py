@@ -17,16 +17,19 @@ class GDCDownloader(object):
             end_dir = self.__config["dir"]
 
         try:
-            print("Downloading file: {}  ...".format(file_id))
+            file_path = os.path.join(end_dir,f"{file_id}.tsv")
+            if not os.path.isfile(file_path):
+                print(f"Downloading file: {file_id}  ...")
 
-            data_endpt = f"https://api.gdc.cancer.gov/data/{file_id}"
-            response = requests.get(data_endpt)
+                data_endpt = f"https://api.gdc.cancer.gov/data/{file_id}"
+                response = requests.get(data_endpt)
 
-            binary_content = response.content
-            check_dir_exists(end_dir)
-            save_b_file(end_dir + "/" + file_id + ".tsv", binary_content)
+                binary_content = response.content
+                check_dir_exists(end_dir)
+                save_b_file(file_path, binary_content)
+                print("File has been downloaded successfully\n")
 
-            print("File has been downloaded successfully\n")
+
         except Exception as err:
             print("Error occurred while downloading and saving file: {} ".format(err))
 

@@ -12,16 +12,15 @@ class Joiner(object):
 
     # opening fpkm file and creating pandas dataframe of it
     @staticmethod
-    def open_fpkm_file(case_id, tumor_stage, file_path):
+    def open_fpkm_file(tumor_stage, file_path, file_name):
 
-        """pd.read_csv(nrows=1000, delimiter='\\t')"""
-        # file_content = pd.read_csv(file_path, header=None, delimiter='\t', names=["gene", case_id])
         file_content_all = pd.read_csv(file_path, header=1, delimiter="\t")
         file_content = file_content_all[["gene_id", "fpkm_unstranded"]]
 
-        ggfg = len(file_content.index)
-        file_content.loc[len(file_content.index)] = ["tumor_stage", tumor_stage]
+        d2 = {'gene_id': 'stage', 'fpkm_unstranded': tumor_stage}
+        file_content = file_content.append(d2, ignore_index=True)
 
+        file_content = file_content.rename(columns={"fpkm_unstranded": file_name})
         file_content = file_content.set_index("gene_id")
         file_content = file_content.sort_values("gene_id")
 
@@ -36,13 +35,13 @@ class Joiner(object):
             print(this_stage)
             for file_name in tumor_stage_dict[this_stage]:
 
-                file_path = main_dir + "/" + this_stage + "/" + file_name
+                file_path = os.path.join(main_dir, this_stage, file_name)
                 if first_file:
-                    fpkm_df = self.open_fpkm_file(file_name, this_stage, file_path)
+                    fpkm_df = self.open_fpkm_file(this_stage, file_path, file_name)
                     self.create_new_file(fpkm_df.T, output_file)
                     first_file = False
                 else:
-                    new_df = self.open_fpkm_file(file_name, this_stage, file_path)
+                    new_df = self.open_fpkm_file(this_stage, file_path, file_name)
                     self.add_new_case(new_df.T, output_file)
 
         print("Finished with success!")
@@ -57,12 +56,12 @@ class Joiner(object):
             print(this_stage)
             for file_name in tumor_stage_dict[this_stage]:
 
-                file_path = main_dir + "/" + this_stage + "/" + file_name
+                file_path = os.path.join(main_dir, this_stage, file_name)
                 if first_file:
-                    df_merge = self.open_fpkm_file(file_name, this_stage, file_path)
+                    df_merge = self.open_fpkm_file(this_stage, file_path, file_name)
                     first_file = False
                 else:
-                    new_df = self.open_fpkm_file(file_name, this_stage, file_path)
+                    new_df = self.open_fpkm_file(this_stage, file_path, file_name)
                     df_merge = pd.merge(df_merge, new_df, on="gene_id")
 
         df_merge = df_merge.T

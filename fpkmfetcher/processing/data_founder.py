@@ -160,23 +160,23 @@ class GDCServer(object):
             # _LOGGER.info(json.dumps(data, indent=4, sort_keys=True))
 
         if self.__config["join_files"] == "True":
-            try:
-                _LOGGER.info("File joiner started")
-                joiner = Joiner()
-                if self.__config["join_method"] == "append":
-                    joiner.join_fpkm_files_append(
-                        self.__config["dir"], self.__config["dir"] + "/last_file.csv"
-                    )
-                    _LOGGER.info("append method")
-                else:
-                    joiner.join_fpkm_files(
-                        self.__config["dir"], self.__config["dir"] + "/last_file.csv"
-                    )
-                    _LOGGER.info("merge method")
-                _LOGGER.info("Files have been joined successfully")
+            # try:
+            _LOGGER.info("File joiner started")
+            joiner = Joiner()
+            if self.__config["join_method"] == "append":
+                joiner.join_fpkm_files_append(
+                    self.__config["dir"], self.__config["dir"] + "/last_file.csv"
+                )
+                _LOGGER.info("append method")
+            else:
+                joiner.join_fpkm_files(
+                    self.__config["dir"], self.__config["dir"] + "/last_file.csv"
+                )
+                _LOGGER.info("merge method")
+            _LOGGER.info("Files have been joined successfully")
 
-            except Exception as err:
-                _LOGGER.info("Error occurred while joining files: {}".format(err))
+            # except Exception as err:
+            #     _LOGGER.info("Error occurred while joining files: {}".format(err))
 
         end = time.time() - start
         m, s = divmod(end, 60)
