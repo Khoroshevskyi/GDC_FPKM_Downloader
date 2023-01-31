@@ -42,11 +42,7 @@ def open_file(file_path: str) -> str:
     return data
 
 
-def download_file_from_gdc(self, file_id, end_dir=None):
-
-    if end_dir is None:
-        end_dir = self.__config["dir"]
-
+def download_file_from_gdc(file_id, end_dir=None):
     try:
         file_path = os.path.join(end_dir, f"{file_id}.tsv")
         if not os.path.isfile(file_path):
