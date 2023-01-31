@@ -1,3 +1,4 @@
 include requirements/*
 include fpkmfetcher/*
 include README.md
+include fpkmfetcher/help/*
