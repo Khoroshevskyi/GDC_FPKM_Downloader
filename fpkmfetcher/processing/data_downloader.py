@@ -3,7 +3,7 @@
 import requests
 import argparse
 from fpkmfetcher.utils import *
-
+from fpkmfetcher.const import GDC_API_DATA_STR
 
 class GDCDownloader(object):
     def __init__(self, config=None):
@@ -17,21 +17,20 @@ class GDCDownloader(object):
             end_dir = self.__config["dir"]
 
         try:
-            file_path = os.path.join(end_dir,f"{file_id}.tsv")
+            file_path = os.path.join(end_dir, f"{file_id}.tsv")
             if not os.path.isfile(file_path):
                 print(f"Downloading file: {file_id}  ...")
 
-                data_endpt = f"https://api.gdc.cancer.gov/data/{file_id}"
-                response = requests.get(data_endpt)
+                data_endpoint = f"{GDC_API_DATA_STR}{file_id}"
+                response = requests.get(data_endpoint)
 
                 binary_content = response.content
                 check_dir_exists(end_dir)
                 save_b_file(file_path, binary_content)
                 print("File has been downloaded successfully\n")
 
-
         except Exception as err:
-            print("Error occurred while downloading and saving file: {} ".format(err))
+            print(f"Error occurred while downloading and saving file: {err}")
 
 
 def get_arg():

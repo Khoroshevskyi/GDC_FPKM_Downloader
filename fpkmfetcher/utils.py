@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
-
 import os
 import json
 import logging
+import requests
+from fpkmfetcher.const import GDC_API_DATA_STR
 
 """
 Script contains functions that are used in few scrips
@@ -40,3 +40,25 @@ def open_file(file_path: str) -> str:
     with open(file_path, "r") as file:
         data = file.read()
     return data
+
+
+def download_file_from_gdc(self, file_id, end_dir=None):
+
+    if end_dir is None:
+        end_dir = self.__config["dir"]
+
+    try:
+        file_path = os.path.join(end_dir, f"{file_id}.tsv")
+        if not os.path.isfile(file_path):
+            print(f"Downloading file: {file_id}  ...")
+
+            data_endpoint = f"{GDC_API_DATA_STR}{file_id}"
+            response = requests.get(data_endpoint)
+
+            binary_content = response.content
+            check_dir_exists(end_dir)
+            save_b_file(file_path, binary_content)
+            print("File has been downloaded successfully\n")
+
+    except Exception as err:
+        print(f"Error occurred while downloading and saving file: {err}")

@@ -7,8 +7,13 @@ from fpkmfetcher.processing.data_formatter import DataFormatter
 from fpkmfetcher.processing.data_joiner import Joiner
 import datetime
 import time
+import json
 
-from fpkmfetcher.utils import *
+from fpkmfetcher.utils import (
+    download_file_from_gdc,
+    check_dir_exists,
+    save_file,
+)
 
 _LOGGER = logging.getLogger("fpkmfetcher")
 
@@ -132,9 +137,7 @@ class GDCServer(object):
         for case in data["hits"]:
             nb_file += 1
             directory = self.__config["dir"] + "/" + stage
-            self.file_downloader.download_file(
-                case["fpkm_files"][0]["file_id"], directory
-            )
+            download_file_from_gdc(case["fpkm_files"][0]["file_id"], directory)
 
             _LOGGER.info(
                 "Files: {} out of {} have been downloaded".format(nb_file, len_all)
