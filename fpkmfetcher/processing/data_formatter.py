@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from fpkmfetcher.utils import *
+from fpkmfetcher.const import FILE_EXTENSION
 import argparse
 
 
@@ -29,9 +30,8 @@ class DataFormatter(object):
             self.add_case_to_dataset(case)
             is_empty = True
             for file in case["files"]:
-                ending = "rna_seq.augmented_star_gene_counts.tsv"
                 if (
-                    file["file_name"][-len(ending) :].lower() == ending
+                    file["file_name"][-len(FILE_EXTENSION) :].lower() == FILE_EXTENSION
                     and file["access"] == "open"
                 ):
                     is_empty = False

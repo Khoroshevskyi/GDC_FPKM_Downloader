@@ -1,14 +1,19 @@
-# -*- coding: utf-8 -*-
-
 import requests
 import logging
-from fpkmfetcher.processing.data_downloader import GDCDownloader
-from fpkmfetcher.processing.data_formatter import DataFormatter
-from fpkmfetcher.processing.data_joiner import Joiner
 import datetime
 import time
+import json
 
-from fpkmfetcher.utils import *
+from fpkmfetcher.processing.data_formatter import DataFormatter
+from fpkmfetcher.processing.data_joiner import Joiner
+from fpkmfetcher.const import (
+    GDC_API_CASE_ENDPOINT,
+)
+from fpkmfetcher.utils import (
+    download_file_from_gdc,
+    check_dir_exists,
+    save_file,
+)
 
 _LOGGER = logging.getLogger("fpkmfetcher")
 
@@ -17,7 +22,6 @@ class GDCServer(object):
     def __init__(self, config):
 
         self.__config = config
-        self.file_downloader = GDCDownloader(self.__config)
 
     def create_params(self, tumor_stage):
 
@@ -72,13 +76,13 @@ class GDCServer(object):
             "expand": [expand],
             # "format": self.__config["format"]
         }
-        case_diagnose = requests.get(self.__config["cases_endpt"], params=parameters)
+        case_diagnose = requests.get(GDC_API_CASE_ENDPOINT, params=parameters)
         return case_diagnose.json()
 
     def get_case_multiple_expands(self, params):
         expand_list = params["expand"]
         params["expand"] = expand_list[0]
-        data = requests.get(self.__config["cases_endpt"], params=params).json()
+        data = requests.get(GDC_API_CASE_ENDPOINT, params=params).json()
 
         for expand in expand_list[1:]:
             for case_number in range(len(data["data"]["hits"])):
@@ -99,7 +103,7 @@ class GDCServer(object):
             if len(params["expand"]) > 1:
                 data = self.get_case_multiple_expands(params)
             else:
-                data = requests.get(self.__config["cases_endpt"], params=params).json()
+                data = requests.get(GDC_API_CASE_ENDPOINT, params=params).json()
 
             return data
 
@@ -132,9 +136,7 @@ class GDCServer(object):
         for case in data["hits"]:
             nb_file += 1
             directory = self.__config["dir"] + "/" + stage
-            self.file_downloader.download_file(
-                case["fpkm_files"][0]["file_id"], directory
-            )
+            download_file_from_gdc(case["fpkm_files"][0]["file_id"], directory)
 
             _LOGGER.info(
                 "Files: {} out of {} have been downloaded".format(nb_file, len_all)
