@@ -1,0 +1,3 @@
+include requirements/*
+include fpkmfetcher/processing/*
+include README.md
