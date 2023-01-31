@@ -50,12 +50,15 @@ class UiMainWindow:
         # combo Box to check cancer type
         self.comboBox_cancer_type = QtWidgets.QComboBox(self.scrollAreaWidgetContents_2)
         self.comboBox_cancer_type.setObjectName("comboBox_cancer_type")
-        self.comboBox_cancer_type.addItems(["breast",
-                                            "lung",
-                                            # "brain",
-                                            # "lymph nodes",
-                                            # "Bone Marrow",
-                                            ])
+        self.comboBox_cancer_type.addItems(
+            [
+                "breast",
+                "lung",
+                # "brain",
+                # "lymph nodes",
+                # "Bone Marrow",
+            ]
+        )
         self.formLayout.setWidget(
             1, QtWidgets.QFormLayout.FieldRole, self.comboBox_cancer_type
         )

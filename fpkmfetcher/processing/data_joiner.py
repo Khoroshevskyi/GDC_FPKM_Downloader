@@ -18,7 +18,9 @@ class Joiner(object):
         file_content_all = pd.read_csv(file_path, header=1, delimiter="\t")
         file_content = file_content_all[["gene_id", "fpkm_unstranded"]]
 
-        d2 = pd.DataFrame.from_dict({"gene_id": ["stage"], "fpkm_unstranded": [tumor_stage]})
+        d2 = pd.DataFrame.from_dict(
+            {"gene_id": ["stage"], "fpkm_unstranded": [tumor_stage]}
+        )
         file_content = pd.concat((file_content, d2), ignore_index=True)
 
         file_content = file_content.rename(columns={"fpkm_unstranded": file_name})

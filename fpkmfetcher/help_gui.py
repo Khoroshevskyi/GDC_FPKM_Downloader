@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from PyQt5 import QtCore, QtWidgets
+import os
 from fpkmfetcher.utils import open_file
 
 
@@ -42,8 +43,11 @@ class HelpWindow:
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
         self.MainWindow.setWindowTitle(_translate("MainWindow", "HELP"))
+        this_dir = os.path.dirname(__file__)
         self.textEdit.setHtml(
-            _translate("MainWindow", open_file("fpkmfetcher/src/help.html"))
+            _translate(
+                "MainWindow", open_file(os.path.join(this_dir, "src", "help.html"))
+            )
         )
 
 
