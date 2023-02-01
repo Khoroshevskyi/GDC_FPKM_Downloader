@@ -39,7 +39,7 @@ setup(
     name=PACKAGE,
     packages=[PACKAGE],
     version=version,
-    description="Program for downloading FPKM data and metadata from Genomic Data Commons Data Portal.",
+    description="Program for downloading and integration FPKM data and metadata from Genomic Data Commons Data Portal.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     classifiers=[
