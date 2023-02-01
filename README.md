@@ -8,10 +8,10 @@ Program provides users with functionality that enables to choose what cancer typ
 user is interested in.
 
 ----- 
-This program as subproject for my master thesis: "The usage of Machine learning techniques
+This program is a subproject for my master thesis: "The usage of Machine learning techniques
 in analysis of transcriptomic profiles of tumor cells" at the Wroclaw University of Environmental and Life Sciences.
 
-All information about data and API that have been used in scripts can be found in the link below:<br />
+All information about data and API that have been used in scripts can be found in the link:
 https://gdc.cancer.gov/
 
 fpkmfetcher is built based on Python3.8+ language.
@@ -27,5 +27,7 @@ Run `fpkmfetcher` in command line.
 ____
 Some of the code, functionality and methods can be outdated, as the first version of the program was created in 2020
 and API, and structure of GDC, Python are rapidly changing.
+
+If you have any questions or suggestions please contact me: 111273@student.upwr.edu.pl
 
 
