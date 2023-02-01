@@ -54,9 +54,9 @@ class UiMainWindow:
             [
                 "breast",
                 "lung",
-                # "brain",
-                # "lymph nodes",
-                # "Bone Marrow",
+                "brain",
+                "lymph nodes",
+                "Bone Marrow",
             ]
         )
         self.formLayout.setWidget(
