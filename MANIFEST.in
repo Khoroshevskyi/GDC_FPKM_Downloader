@@ -2,3 +2,4 @@ include requirements/*
 include fpkmfetcher/*
 include README.md
 include fpkmfetcher/src/help.html
+include fpkmfetcher/processing/*
