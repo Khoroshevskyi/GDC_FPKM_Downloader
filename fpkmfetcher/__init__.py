@@ -1,6 +1,7 @@
 """ Package-level data """
 
 from fpkmfetcher.fpkmfetcher import *
+from fpkmfetcher.processing import *
 
 import logmuse
 import coloredlogs
